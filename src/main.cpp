@@ -4,16 +4,46 @@
 #include "Adafruit_TCS34725.h"
 #include "Adafruit_BNO055.h"
 #include "PRIZM.h"
-Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_614MS, TCS34725_GAIN_1X);
-Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
+
+
+
+class Barrier {
+    Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_614MS, TCS34725_GAIN_1X);
+public:
+    void init();
+    void update();
+} barrier;
+
+class Drivetrain {
+    Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
+
+public:
+    void init();
+    void update();
+} drivetrain;
+
+void Barrier::init() {
+    tcs.begin();
+}
+
+void Barrier::update() {
+
+}
+
+void Drivetrain::init() {
+    prizm.PrizmBegin();
+    bno.begin();
+}
+
+void Drivetrain::update() {
+
+}
 
 void setup() {
-  // put your setup code here, to run once:
-  prizm.PrizmBegin();
-  bno.begin();
-  tcs.begin();
+    barrier.init();
+    drivetrain.init();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+
 }
