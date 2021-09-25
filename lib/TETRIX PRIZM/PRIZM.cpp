@@ -72,14 +72,16 @@ void EXPANSION::setExpID(int newID) {        // === command to change ID/ I2C ad
     Wire.endTransmission();
     delay(IIC_TRANSMISSON_DELAY);
 
-    pinMode(6, OUTPUT);                //===== RED LED is on pin 6
-    digitalWrite(6, HIGH);                // Flash PRIZM Red LED when finished
-    delay(250);
-    digitalWrite(6, LOW);
-    delay(250);
-    digitalWrite(6, HIGH);
-    delay(250);
-    digitalWrite(6, LOW);
+    if(oldID) {
+        pinMode(6, OUTPUT);                //===== RED LED is on pin 6
+        digitalWrite(6, HIGH);                // Flash PRIZM Red LED when finished
+        delay(250);
+        digitalWrite(6, LOW);
+        delay(250);
+        digitalWrite(6, HIGH);
+        delay(250);
+        digitalWrite(6, LOW);
+    }
 
 }
 
@@ -279,7 +281,7 @@ void PRIZM::PrizmBegin() {  //======= Send a SW reset to all EXPANSIONansion por
     Wire.endTransmission();
     delay(IIC_TRANSMISSON_DELAY);
 
-    delay(1000);                        // 1 second delay between time GO button is pushed and program starts gives time for resets
+    delay(500);                        // 1 second delay between time GO button is pushed and program starts gives time for resets
 
     Wire.beginTransmission(INTEGRATED_DCEXP_ADDR);        // Send an "Enable" Byte to DC and Servo controller chips and EXPANSIONansion controllers
     Wire.write(0x25);                 // enable command so that the robots won't move without a PrizmBegin statement
@@ -687,19 +689,7 @@ void EXPANSION::setMotorPower(int address, int channel, int power)    // set Mot
     delay(IIC_TRANSMISSON_DELAY);
 }
 
-void PRIZM::setMotorPowers(int power1, int power2) {     //power only Block Command for PRIZM Motor 1 and 2 (both in one transmission)
-
-    Wire.beginTransmission(INTEGRATED_DCEXP_ADDR);
-    Wire.write(0x42);
-    Wire.write(power1);
-    Wire.write(power2);
-    Wire.endTransmission();
-    delay(IIC_TRANSMISSON_DELAY);
-
-}
-
-void
-EXPANSION::setMotorPowers(int address, int power1, int power2) {     //power only Block Command for EXPANSIONANSION Motor 1 and 2 (both in one transmission)
+void EXPANSION::setMotorPowers(int address, int power1, int power2) {     //power only Block Command for EXPANSIONANSION Motor 1 and 2 (both in one transmission)
 
     Wire.beginTransmission(address);
     Wire.write(0x42);
@@ -708,6 +698,11 @@ EXPANSION::setMotorPowers(int address, int power1, int power2) {     //power onl
     Wire.endTransmission();
     delay(IIC_TRANSMISSON_DELAY);
 
+}
+
+void PRIZM::setMotorPowers(int power1, int power2) {     //power only Block Command for PRIZM Motor 1 and 2 (both in one transmission)
+
+    expansion.setMotorPowers(INTEGRATED_DCEXP_ADDR, power1, power2);
 }
 
 void PRIZM::setMotorSpeed(int channel, long Mspeed) {      // === set speed of each PRIZM DC motor == requires a 1440 CPR installed encoder to do the PID
@@ -751,29 +746,9 @@ void EXPANSION::setMotorSpeed(int address, int channel,
 
 }
 
-void PRIZM::setMotorSpeeds(long Mspeed1,
-                           long Mspeed2) {      // === BLOCK write to set speeds of both PRIZM motors at once == 1440 CPR encoder must be installed to do PID
+void PRIZM::setMotorSpeeds(long Mspeed1, long Mspeed2) {      // === BLOCK write to set speeds of both PRIZM motors at once == 1440 CPR encoder must be installed to do PID
 
-    int lobyte1;
-    int hibyte1;
-
-    int lobyte2;
-    int hibyte2;
-
-    lobyte1 = lowByte(Mspeed1);
-    hibyte1 = highByte(Mspeed1);
-
-    lobyte2 = lowByte(Mspeed2);
-    hibyte2 = highByte(Mspeed2);
-
-    Wire.beginTransmission(INTEGRATED_DCEXP_ADDR);
-    Wire.write(0x45);
-    Wire.write(hibyte1);
-    Wire.write(lobyte1);
-    Wire.write(hibyte2);
-    Wire.write(lobyte2);
-    Wire.endTransmission();
-    delay(IIC_TRANSMISSON_DELAY);
+    expansion.setMotorSpeeds(INTEGRATED_DCEXP_ADDR,Mspeed1,Mspeed2);
 }
 
 void EXPANSION::setMotorSpeeds(int address, long Mspeed1,

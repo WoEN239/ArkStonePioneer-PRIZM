@@ -32,7 +32,7 @@ void Barrier::update() {
 
 void Drivetrain::init() {
     prizm.PrizmBegin();
-    bno.begin();
+    //bno.begin();
 }
 
 void Drivetrain::update() {
@@ -40,10 +40,11 @@ void Drivetrain::update() {
 }
 
 void setup() {
-    barrier.init();
+    //barrier.init();
     drivetrain.init();
 }
 
 void loop() {
-
+    prizm.setMotorPowers(125,0);
+    expansion.setMotorPowers(2,125,0);
 }
