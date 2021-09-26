@@ -6,9 +6,13 @@
 #define PUCKCOLLECT2021_LEDSTRIP_H
 
 
-class ledstrip {
+#include "robotmodule.h"
+
+class LedStrip : public RobotModule {
 public:
-    void init();
+    void init() override;
+
+    void update() override;
 
 };
 

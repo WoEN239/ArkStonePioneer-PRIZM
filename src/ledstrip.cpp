@@ -5,6 +5,10 @@
 #include "ledstrip.h"
 
 
-void ledstrip::init() {
+void LedStrip::init() {
+
+}
+
+void LedStrip::update() {
 
 }

@@ -1,7 +1,7 @@
 
-PITSCO EDUCATION
-Copyright (c) 2016 PITSCO EDUCATION
-TETRIX PRIZM Library.
+Workshop of Eternal Nonsense
+Copyright (c) 2021 Workshop of Eternal Nonsense
+TETRIX PRIZM Library by Pitsco Education fork.
   
 
 
