@@ -49,7 +49,7 @@ public:
 private:
 };
 
-extern Prizm prizm_controller;
+extern Prizm prizm;
 
 #endif
 

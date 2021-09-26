@@ -3,3 +3,11 @@
 //
 
 #include "drivetrain.h"
+
+void Drivetrain::init() {
+
+}
+
+void Drivetrain::update() {
+
+}

@@ -3,3 +3,11 @@
 //
 
 #include "barrier.h"
+
+void Barrier::init() {
+
+}
+
+void Barrier::update() {
+
+}
