@@ -1,5 +1,0 @@
-C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/Production.dir
-C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/Debug.dir
-C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/Z_DUMMY_TARGET.dir
-C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/rebuild_cache.dir
