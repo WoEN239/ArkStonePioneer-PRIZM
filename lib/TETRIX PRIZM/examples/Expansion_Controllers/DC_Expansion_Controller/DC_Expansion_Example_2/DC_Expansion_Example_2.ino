@@ -23,8 +23,8 @@ EXPANSION exc;          // Instantiate an object in the EXPANSION class named "e
                         // "exc" can be changed to whatever you wish.
 
 void setup() {
-  
-  prizm.PrizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
+
+    prizm.prizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
 
 }
 
@@ -40,7 +40,7 @@ void loop() {
 
   delay(5000);                            // wait here for 5 seconds
 
-  prizm.PrizmEnd();                       // terminate the program                                                
+    prizm.prizmEnd();                       // terminate the program
 
   
 }

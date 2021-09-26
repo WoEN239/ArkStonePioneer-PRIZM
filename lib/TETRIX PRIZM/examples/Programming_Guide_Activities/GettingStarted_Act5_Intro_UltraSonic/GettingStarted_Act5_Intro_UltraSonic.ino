@@ -10,7 +10,7 @@
 
 void setup() {     //this code runs once
 
-  prizm.PrizmBegin();     // initialize PRIZM
+    prizm.prizmBegin();     // initialize PRIZM
 
   Serial.begin(9600);     // configure the serial monitor for 9600 baud rate
  

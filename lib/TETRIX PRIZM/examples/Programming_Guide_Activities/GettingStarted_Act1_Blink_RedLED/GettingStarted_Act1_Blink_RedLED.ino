@@ -9,7 +9,7 @@
 
 void setup() {
 
-   prizm.PrizmBegin();   // initialize the PRIZM controller
+    prizm.prizmBegin();   // initialize the PRIZM controller
 
 }
 

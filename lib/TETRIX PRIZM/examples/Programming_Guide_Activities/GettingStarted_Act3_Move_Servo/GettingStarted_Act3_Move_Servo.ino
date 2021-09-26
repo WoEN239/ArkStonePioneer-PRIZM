@@ -9,7 +9,7 @@ PRIZM prizm;          // instantiate a PRIZM object “prizm” so we can use it
 
 void setup() {
 
-  prizm.PrizmBegin();         // initialize the PRIZM controller
+    prizm.prizmBegin();         // initialize the PRIZM controller
   prizm.setServoSpeed(1,25);  // set servo 1 speed to 25%
 
 }

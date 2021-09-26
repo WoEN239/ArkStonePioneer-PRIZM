@@ -11,7 +11,7 @@
 
 void setup() {
 
-  prizm.PrizmBegin();   //initialize PRIZM
+    prizm.prizmBegin();   //initialize PRIZM
 
   prizm.setMotorInvert(1,1);      // invert the direction of DC Motor 1
                                   // to harmonize the direction of

@@ -7,7 +7,7 @@
 
 void setup() {
 
-  prizm.PrizmBegin();         // initialize PRIZM
+    prizm.prizmBegin();         // initialize PRIZM
   prizm.setMotorInvert(1,1);  // invert the direction of DC Motor 1 to harmonize direction
                               
 }
@@ -18,7 +18,7 @@ for(int x=0; x<=3; x++){    // Do this four times, increment x by + 1
   forward();
   rightTurn();
  }
-  prizm.PrizmEnd();
+    prizm.prizmEnd();
 }
 
 void forward(){                       // function to go forward

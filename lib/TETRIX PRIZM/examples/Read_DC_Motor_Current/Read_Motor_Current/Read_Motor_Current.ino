@@ -15,7 +15,7 @@ PRIZM prizm;          // Instantiate an object named prizm
 void setup() {
 
   Serial.begin(9600);   // Setup the serial monitor at 9600 baud. You must open the serial monitor to view data
-  prizm.PrizmBegin();   // Initiates the PRIZM controller - must be called in the setup of each PRIZM sketch
+    prizm.prizmBegin();   // Initiates the PRIZM controller - must be called in the setup of each PRIZM sketch
   
 
 }

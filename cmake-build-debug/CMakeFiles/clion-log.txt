@@ -1,4 +1,4 @@
-"C:\Program Files\JetBrains\CLion 2020.3.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\muram\Documents\PlatformIO\Projects\PuckCollect2021
+"C:\Program Files\JetBrains\CLion 2021.1.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\User\Documents\PlatformIO\Projects\PuckCollect2021
 -- The C compiler identification is GNU 10.3.0
 -- The CXX compiler identification is GNU 10.3.0
 -- Detecting C compiler ABI info
@@ -11,4 +11,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/Users/muram/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug
+-- Build files have been written to: C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug

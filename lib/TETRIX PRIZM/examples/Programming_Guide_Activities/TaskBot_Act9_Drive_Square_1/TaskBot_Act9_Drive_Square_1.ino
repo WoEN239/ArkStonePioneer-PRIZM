@@ -6,7 +6,7 @@
   PRIZM prizm;          // instantiate a PRIZM object “prizm” so we can use its functions
 
 void setup() {
-  prizm.PrizmBegin();         // initialize PRIZM
+    prizm.prizmBegin();         // initialize PRIZM
   prizm.setMotorInvert(1,1);  // invert the direction of DC Motor 1 to harmonize the direction
 }
 void loop() {
@@ -38,7 +38,7 @@ void loop() {
   delay(3000);                      // wait here for 3 seconds while motors spin
   prizm.setMotorPowers(125,125);    // stop both motors with in brake mode
   delay(1000);                      // wait here for 1 second
-  prizm.PrizmEnd();                 // end program and reset PRIZM
+    prizm.prizmEnd();                 // end program and reset PRIZM
 }
 
 

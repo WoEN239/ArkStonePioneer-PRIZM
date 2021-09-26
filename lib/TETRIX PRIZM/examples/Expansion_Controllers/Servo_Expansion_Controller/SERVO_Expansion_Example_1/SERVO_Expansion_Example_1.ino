@@ -23,8 +23,8 @@ EXPANSION exc;          // Instantiate an object in the EXPANSION class named "e
                         // "exc" can be changed to whatever you wish.
 
 void setup() {
-  
-  prizm.PrizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
+
+    prizm.prizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
 
   exc.setServoSpeeds(2,25,25,25,25,25,25);    // set the speed of all six servos attached to Servo Expansion Controller with ID# 2 to 25%. Range is 0 - 100%
                                               // The first number (#2) in the parameter paraenthesis is the ID# of the controller.

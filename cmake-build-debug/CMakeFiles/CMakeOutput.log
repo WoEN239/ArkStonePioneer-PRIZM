@@ -11,7 +11,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
 
-The C compiler identification is GNU, found in "C:/Users/muram/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/3.17.5/CompilerIdC/a.exe"
+The C compiler identification is GNU, found in "C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/3.20.2/CompilerIdC/a.exe"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: C:/msys64/mingw64/bin/g++.exe 
@@ -24,5 +24,5 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
 
-The CXX compiler identification is GNU, found in "C:/Users/muram/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/3.17.5/CompilerIdCXX/a.exe"
+The CXX compiler identification is GNU, found in "C:/Users/User/Documents/PlatformIO/Projects/PuckCollect2021/cmake-build-debug/CMakeFiles/3.20.2/CompilerIdCXX/a.exe"
 

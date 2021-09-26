@@ -17,7 +17,7 @@ PRIZM prizm;          // Instantiate an object named prizm
 
 void setup() {
 
-  prizm.PrizmBegin(); // Initiates the PRIZM controller - must be called in the setup of each PRIZM sketch
+    prizm.prizmBegin(); // Initiates the PRIZM controller - must be called in the setup of each PRIZM sketch
   
 
 }

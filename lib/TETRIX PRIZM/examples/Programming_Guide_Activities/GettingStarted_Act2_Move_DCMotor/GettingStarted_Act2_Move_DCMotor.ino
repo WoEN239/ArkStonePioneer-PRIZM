@@ -8,9 +8,9 @@
   #include <PRIZM.h>    // include the PRIZM library in the sketch
   PRIZM prizm;          // instantiate a PRIZM object “prizm” so we can use its functions
 
-void setup() {        
+void setup() {
 
-  prizm.PrizmBegin();   // Initialize the PRIZM controller
+    prizm.prizmBegin();   // Initialize the PRIZM controller
 }
 
 void loop() {     // repeat in a loop

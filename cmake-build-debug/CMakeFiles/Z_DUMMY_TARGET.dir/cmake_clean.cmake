@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Z_DUMMY_TARGET.dir/lib/TETRIX_PRIZM/PRIZM.cpp.obj"
   "CMakeFiles/Z_DUMMY_TARGET.dir/src/main.cpp.obj"
   "Z_DUMMY_TARGET"
   "Z_DUMMY_TARGET.manifest"

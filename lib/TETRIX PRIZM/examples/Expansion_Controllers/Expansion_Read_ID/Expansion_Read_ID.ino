@@ -14,20 +14,20 @@ EXPANSION exc;          // Instantiate an object in the EXPANSION class named "e
 void setup() {
 
   Serial.begin(9600);   // Setup the Serial Monitor at 9600 baud.
-  prizm.PrizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning of the sketch
+    prizm.prizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning of the sketch
 
 }
 
 void loop() {
 
-  int x = exc.readExpID();  // read the ID# of the expansion controller connected to the PRIZM expansion port.
+  int x = exc.readID();  // read the ID# of the expansion controller connected to the PRIZM expansion port.
                             // Important: Only one controller can be connected when using this function.
 
   Serial.print("Expansion Controller ID# = ");        // Print the ID# to the Serial Monitor. You must open the serial monitor to view.
   Serial.print(x);
   Serial.println(" ");
-  
-  prizm.PrizmEnd();         // Terminate program
+
+    prizm.prizmEnd();         // Terminate program
                               
 }
 

@@ -27,7 +27,7 @@ int x;                  // Setup an integer variable x
 void setup() {
 
   Serial.begin(9600);   // setup the Serial Monitor for 9600 baud
-  prizm.PrizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
+    prizm.prizmBegin();   // Initiates the PRIZM controller. Must be called at the beginning
 
   exc.setServoPosition(2,1,90); // set initial positio of servo 1 attached to expansion controller with ID#2 to 90 degrees (center)
   delay(1000);                  // wait for 1 second

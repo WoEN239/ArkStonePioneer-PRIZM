@@ -12,7 +12,7 @@
 
 void setup() {          //this code runs once
 
-  prizm.PrizmBegin();   //initialize PRIZM
+    prizm.prizmBegin();   //initialize PRIZM
   
 }
 
