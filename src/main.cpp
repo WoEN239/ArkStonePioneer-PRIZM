@@ -3,10 +3,12 @@
 #include "prizm.h"
 
 
-#include "barrier.h"
 #include "drivetrain.h"
+
+#include "barrier.h"
 #include "intake.h"
 #include "ledstrip.h"
+
 
 void setup() {
     //initialization phase 1
@@ -26,4 +28,8 @@ void setup() {
 }
 
 void loop() {
+    barrier.update();
+    drivetrain.update();
+    intake.update();
+    led_strip.update();
 }

@@ -4,7 +4,14 @@
 
 #include "drivetrain.h"
 
+Drivetrain drivetrain;
+
 void Drivetrain::init() {
+
+    bno.begin();
+    bno.setExtCrystalUse(true);
+    drivetrainMotorExpansion1.resetEncoders();
+    drivetrainMotorExpansion2.resetEncoders();
 
 }
 

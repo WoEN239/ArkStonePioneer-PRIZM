@@ -4,6 +4,8 @@
 
 #include "intake.h"
 
+Intake intake;
+
 void Intake::init() {
 
 }

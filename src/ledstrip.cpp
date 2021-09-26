@@ -4,6 +4,7 @@
 
 #include "ledstrip.h"
 
+LedStrip led_strip;
 
 void LedStrip::init() {
 

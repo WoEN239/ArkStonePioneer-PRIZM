@@ -18,6 +18,7 @@
 
 //#include "utility/WSWire.h"
 
+Prizm prizm;
 
 void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion port I2C
     Wire.begin();
