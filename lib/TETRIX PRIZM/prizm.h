@@ -30,7 +30,6 @@
 
 class Prizm {
 
-
 public:
     DCExpansion integrated_DC;
     ServoExpansion integrated_servo;

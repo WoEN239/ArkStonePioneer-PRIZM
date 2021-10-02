@@ -36,6 +36,8 @@ class ServoExpansion : public TetrixExpansion {
 
     using TetrixExpansion::TetrixExpansion;
 
+private:
+
     int last_position_1 = 90;        // these hold the current 'last' positions of each servo channel
     int last_position_2 = 90;
     int last_position_3 = 90;
@@ -43,12 +45,18 @@ class ServoExpansion : public TetrixExpansion {
     int last_position_5 = 90;
     int last_position_6 = 90;
 
+public:
+
     void setServoSpeed(int channel, int servospeed);
+
     void setServoSpeeds(int servospeed1, int servospeed2, int servospeed3, int servospeed4, int servospeed5, int servospeed6);
+
     void setServoPosition(int channel, int servoposition);
-    void setServoPositions(int servoposition1, int servoposition2, int servoposition3, int servoposition4, int servoposition5,
-                           int servoposition6);
+
+    void setServoPositions(int servoposition1, int servoposition2, int servoposition3, int servoposition4, int servoposition5, int servoposition6);
+
     void setCRServoState(int channel, int servospeed);
+
     int readServoPosition(int channel);
 };
 

@@ -3,6 +3,8 @@
 #include "prizm.h"
 
 
+#define SERIAL_DEBUGGING 115200
+
 #include "drivetrain.h"
 
 #include "barrier.h"
@@ -11,6 +13,9 @@
 
 
 void setup() {
+#ifdef SERIAL_DEBUGGING
+    Serial.begin(SERIAL_DEBUGGING);
+#endif
     //initialization phase 1
     prizm.prizmBegin();
     //initalization phase 2
@@ -21,13 +26,19 @@ void setup() {
 
     prizm.setRedLED(HIGH);                    // Turn on when we're reset
     while (prizm.readStartButton() == 0) {
-        prizm.setGreenLED(millis() % 333 < 166 ? HIGH : LOW);
-    }        // wait for the program start (green) button pressed
+        prizm.setGreenLED(millis() % 200 < 100 ? HIGH : LOW);
+    }        // wait for the program start (green_value) button pressed
     prizm.setGreenLED(LOW);
     prizm.setRedLED(LOW);
 }
 
 void loop() {
+#ifdef SERIAL_DEBUGGING
+    Serial.print("r "); Serial.print(barrier.red_value);
+    Serial.print(" g "); Serial.print(barrier.green_value);
+    Serial.print(" b "); Serial.print(barrier.blue_value);
+    Serial.print(" "); Serial.print(drivetrain.current_angle); Serial.println(barrier.is_at_home);
+#endif
     barrier.update();
     drivetrain.update();
     intake.update();

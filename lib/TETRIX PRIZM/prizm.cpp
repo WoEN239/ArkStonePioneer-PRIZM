@@ -23,7 +23,9 @@ Prizm prizm;
 void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion port I2C
     Wire.begin();
 
-    delay(500);                        // Give EXPANSION controllers time to reset
+    for (int i = 1; i <= 6; i++)
+        TetrixExpansion(i).controllerReset();
+    delay(400);                        // Give EXPANSION controllers time to reset
     // SW reset on Expansion and DC + Servo chips at addresses 5 and 6 (7 is not used)
     for (int i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerReset();
@@ -31,23 +33,29 @@ void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion por
     unsigned long t_start = millis(); // Battery chere indication
     for (int i = 0; i < (readBatteryVoltage() - 1050) / 100; i++) {
         setRedLED(HIGH);
-        delay(75);
+        setGreenLED(HIGH);
+        delay(100);
         setRedLED(LOW);
-        delay(75);
+        setGreenLED(LOW);
+        delay(100);
     }
-    delay(500 - (millis() - t_start)); // 1 second delay between time GO button is pushed and program starts gives time for resets
+    setRedLED(LOW);
+    setGreenLED(LOW);
+    delay(500 - (millis() - t_start)>0?500 - (millis() - t_start):0); // 1 second delay between time GO button is pushed and program starts gives time for resets
 
     for (int i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerEnable();
 
     setGreenLED(HIGH);                    // Turn on when we're reset
     while (readStartButton() == 0) {
-        setRedLED(millis() % 3000 < 100 ? HIGH : LOW);
-    }        // wait for the program start (green) button pressed
+        setRedLED(millis() % 3000 < 25 ? HIGH : LOW);
+    }        // wait for the program start (green_value) button pressed
     setRedLED(HIGH);
     t_start = millis();
-    while (millis() - t_start < 200 && readStartButton() == 1) {}
-    setGreenLED(LOW);                    // turn green off
+    while (millis() - t_start < 333 && readStartButton()) {}
+    delay(20);
+    while (readStartButton())
+    setGreenLED(LOW);                    // turn green_value off
 
 
 }

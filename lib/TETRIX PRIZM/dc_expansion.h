@@ -35,10 +35,13 @@ class DCExpansion : public TetrixExpansion {
 
     using TetrixExpansion::TetrixExpansion;
 
-public:
+private:
+
 
     int last_power_1 = 0;
     int last_power_2 = 0;
+
+public:
 
     bool brake_on_zero_1 = false;
     bool brake_on_zero_2 = false;
@@ -47,18 +50,31 @@ public:
     bool invert_encoder_2 = false;
 
     void setMotorPower(int channel, int power);
+
     void setMotorPowers(int power1, int power2);
+
     void setMotorSpeed(int channel, long Mspeed);
+
     void setMotorSpeeds(long Mspeed1, long Mspeed2);
+
     void setMotorTarget(int channel, long Mspeed, long Mtarget);
+
     void setMotorTargets(long Mspeed1, long Mtarget1, long Mspeed2, long Mtarget2);
+
     void setMotorInvert(int channel, int invertMotor, bool invertEncoder);
+
     int readMotorBusy(int channel);
+
     int readMotorCurrent(int channel);
+
     long readEncoderCount(int channel);
+
     void resetEncoder(int channel);
+
     void resetEncoders();
+
     void setMotorSpeedPID(int P, int I, int D);
+
     void setMotorTargetPID(int P, int I, int D);
 
 
