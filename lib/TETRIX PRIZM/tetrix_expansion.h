@@ -19,18 +19,18 @@
 class TetrixExpansion {
 
 protected:
-    int address;
+    uint8_t address;
 public:
 
-    explicit TetrixExpansion(int address = 0);
+    explicit TetrixExpansion(uint8_t address = 0);
 
     void WDT_STOP() const;
     void controllerEnable() const;
     void controllerReset() const;
-    void setID(int newID);
-    int readID(void);
-    int readFirmware() const;
-    int readBatteryVoltage() const;
+    void setID(uint8_t newID);
+    uint8_t readID();
+    int16_t readFirmware() const;
+    int16_t readBatteryVoltage() const;
 
 };
 

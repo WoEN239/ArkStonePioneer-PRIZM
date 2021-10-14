@@ -38,26 +38,26 @@ class ServoExpansion : public TetrixExpansion {
 
 private:
 
-    int last_position_1 = 90;        // these hold the current 'last' positions of each servo channel
-    int last_position_2 = 90;
-    int last_position_3 = 90;
-    int last_position_4 = 90;
-    int last_position_5 = 90;
-    int last_position_6 = 90;
+    int16_t last_position_1 = 90;        // these hold the current 'last' positions of each servo channel
+    int16_t last_position_2 = 90;
+    int16_t last_position_3 = 90;
+    int16_t last_position_4 = 90;
+    int16_t last_position_5 = 90;
+    int16_t last_position_6 = 90;
 
 public:
 
-    void setServoSpeed(int channel, int servospeed);
+    void setServoSpeed(int16_t channel, int16_t servospeed);
 
-    void setServoSpeeds(int servospeed1, int servospeed2, int servospeed3, int servospeed4, int servospeed5, int servospeed6);
+    void setServoSpeeds(int16_t servospeed1, int16_t servospeed2, int16_t servospeed3, int16_t servospeed4, int16_t servospeed5, int16_t servospeed6);
 
-    void setServoPosition(int channel, int servoposition);
+    void setServoPosition(int16_t channel, int16_t servoposition);
 
-    void setServoPositions(int servoposition1, int servoposition2, int servoposition3, int servoposition4, int servoposition5, int servoposition6);
+    void setServoPositions(int16_t servoposition1, int16_t servoposition2, int16_t servoposition3, int16_t servoposition4, int16_t servoposition5, int16_t servoposition6);
 
-    void setCRServoState(int channel, int servospeed);
+    void setCRServoState(int16_t channel, int16_t servospeed);
 
-    int readServoPosition(int channel);
+    int16_t readServoPosition(int16_t channel);
 };
 
 

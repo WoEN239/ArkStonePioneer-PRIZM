@@ -23,15 +23,15 @@ Prizm prizm;
 void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion port I2C
     Wire.begin();
 
-    for (int i = 1; i <= 6; i++)
+    for (uint8_t i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerReset();
     delay(400);                        // Give EXPANSION controllers time to reset
     // SW reset on Expansion and DC + Servo chips at addresses 5 and 6 (7 is not used)
-    for (int i = 1; i <= 6; i++)
+    for (uint8_t i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerReset();
 
     unsigned long t_start = millis(); // Battery chere indication
-    for (int i = 0; i < (readBatteryVoltage() - 1050) / 100; i++) {
+    for (int16_t i = 0; i < (readBatteryVoltage() - 1050) / 100; i++) {
         setRedLED(HIGH);
         setGreenLED(HIGH);
         delay(100);
@@ -43,7 +43,7 @@ void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion por
     setGreenLED(LOW);
     delay(500 - (millis() - t_start)>0?500 - (millis() - t_start):0); // 1 second delay between time GO button is pushed and program starts gives time for resets
 
-    for (int i = 1; i <= 6; i++)
+    for (uint8_t i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerEnable();
 
     setGreenLED(HIGH);                    // Turn on when we're reset
@@ -60,9 +60,9 @@ void Prizm::prizmBegin() {  //======= Send a SW reset to all EXPANSIONansion por
 
 }
 
-void Prizm::prizmEnd() {  //======= Send a SW reset to all I2C devices(resets everything) This is done mainly to stop all motors
+[[noreturn]] void Prizm::prizmEnd() {  //======= Send a SW reset to all I2C devices(resets everything) This is done mainly to stop all motors
 
-    for (int i = 1; i <= 6; i++)
+    for (uint8_t i = 1; i <= 6; i++)
         TetrixExpansion(i).controllerReset();
 
     wdt_enable(WDTO_15MS);  // set the wdt to timeout after 15ms automatically resets
@@ -71,23 +71,23 @@ void Prizm::prizmEnd() {  //======= Send a SW reset to all I2C devices(resets ev
 
 }
 
-int Prizm::readBatteryVoltage() {
+int16_t Prizm::readBatteryVoltage() {
 
-    int Bvoltage = analogRead(0) * 2;
+    int16_t Bvoltage = analogRead(0) * 2;
     return Bvoltage;
 }
 
-int Prizm::readLineSensor(int pin) {     // Can sense black or white (follow the edge of a black line on a white surface)
-    int BWstate; // black or white
+uint8_t Prizm::readLineSensor(uint8_t pin) {     // Can sense black or white (follow the edge of a black line on a white surface)
+    uint8_t BWstate; // black or white
     pinMode(pin, INPUT);
     if (HIGH == digitalRead(pin)) { BWstate = 1; } else { BWstate = 0; }
     return BWstate;
 }
 
-int Prizm::readSonicSensorCM(int pin) {   // Returns distance of object from sensor in Centimeters
+uint32_t Prizm::readSonicSensorCM(uint8_t pin) {   // Returns distance of object from sensor in Centimeters
 
     delayMicroseconds(1000);  // added in version 2 to help with reading accuracy, can't read sonic sensors very fast
-    int duration;
+    uint32_t duration;
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW);
     delayMicroseconds(2);
@@ -100,21 +100,21 @@ int Prizm::readSonicSensorCM(int pin) {   // Returns distance of object from sen
 
 }
 
-void Prizm::setGreenLED(int state) {
+void Prizm::setGreenLED(uint8_t state) {
     pinMode(7, OUTPUT); //===== GREEN LED is on pin 7
     if (state == 1) { digitalWrite(7, HIGH); }
     if (state == 0) { digitalWrite(7, LOW); }
 }
 
-void Prizm::setRedLED(int state) {
+void Prizm::setRedLED(uint8_t state) {
     pinMode(6, OUTPUT); //===== RED LED is on pin 6
     if (state == 1) { digitalWrite(6, HIGH); }
     if (state == 0) { digitalWrite(6, LOW); }
 }
 
-int Prizm::readStartButton() {       //============== function returns; unpressed button == 0; pressed button == 1
+uint8_t Prizm::readStartButton() {       //============== function returns; unpressed button == 0; pressed button == 1
     pinMode(8, INPUT);    // Button is on pin 8; unpressed = high, pressed = low
-    int StartBtn = digitalRead(8);
+    uint8_t StartBtn = digitalRead(8);
     StartBtn = !StartBtn; // toggle variable to make sense;
     return StartBtn;
 }

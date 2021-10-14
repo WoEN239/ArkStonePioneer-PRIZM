@@ -4,7 +4,7 @@
 
 #include "servo_expansion.h"
 
-void ServoExpansion::setServoSpeed(int channel, int servospeed) {
+void ServoExpansion::setServoSpeed(int16_t channel, int16_t servospeed) {
     switch (channel) {
         case 1:
             channel = SVOEXPANSION_SETSERVOSPEED1;
@@ -31,11 +31,11 @@ void ServoExpansion::setServoSpeed(int channel, int servospeed) {
     sendTwoInts(address, channel, servospeed);
 }
 
-void ServoExpansion::setServoSpeeds(int servospeed1, int servospeed2, int servospeed3, int servospeed4, int servospeed5, int servospeed6) {
+void ServoExpansion::setServoSpeeds(int16_t servospeed1, int16_t servospeed2, int16_t servospeed3, int16_t servospeed4, int16_t servospeed5, int16_t servospeed6) {
     sendSevenInts(address, SVOEXPANSION_SETSERVOSPEEDS, servospeed1, servospeed2, servospeed3, servospeed4, servospeed5, servospeed6);
 }
 
-void ServoExpansion::setServoPosition(int channel, int servoposition) {
+void ServoExpansion::setServoPosition(int16_t channel, int16_t servoposition) {
     bool xmit = false;
     switch (channel) {
         case 1:
@@ -77,8 +77,8 @@ void ServoExpansion::setServoPosition(int channel, int servoposition) {
 
 }
 
-void ServoExpansion::setServoPositions(int servoposition1, int servoposition2, int servoposition3, int servoposition4, int servoposition5,
-                                     int servoposition6) {
+void ServoExpansion::setServoPositions(int16_t servoposition1, int16_t servoposition2, int16_t servoposition3, int16_t servoposition4, int16_t servoposition5,
+                                     int16_t servoposition6) {
 
     if (last_position_1 != servoposition1 || last_position_2 != servoposition2 || last_position_3 != servoposition3 ||
         last_position_4 != servoposition4 || last_position_5 != servoposition5 || last_position_6 != servoposition6) {
@@ -94,14 +94,14 @@ void ServoExpansion::setServoPositions(int servoposition1, int servoposition2, i
     }
 }
 
-void ServoExpansion::setCRServoState(int channel, int servospeed) {
+void ServoExpansion::setCRServoState(int16_t channel, int16_t servospeed) {
     if (channel == 1) { channel = SVOEXPANSION_SETCRSERVOSTATE1; }   // CRservo 1
     if (channel == 2) { channel = SVOEXPANSION_SETCRSERVOSTATE2; }   // CRservo 2
 
     sendTwoInts(address, channel, servospeed);
 }
 
-int ServoExpansion::readServoPosition(int channel) {
+int16_t ServoExpansion::readServoPosition(int16_t channel) {
     switch (channel) {
         case 1:
             channel = SVOEXPANSION_READSERVOPOSITION1;
@@ -126,8 +126,8 @@ int ServoExpansion::readServoPosition(int channel) {
     }
 
     sendOneInt(address, channel);
-    Wire.requestFrom(address, 1);
-    int readServoPosition = Wire.read();
+    Wire.requestFrom(address, (uint8_t)1);
+    int16_t readServoPosition = Wire.read();
     delay(PRIZMUTILS_DEFAULT_I2C_DELAY);
     return readServoPosition;
 }

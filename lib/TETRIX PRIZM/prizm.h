@@ -36,14 +36,15 @@ public:
 
     Prizm() : integrated_DC(5), integrated_servo(6) {}
 
-    int readLineSensor(int pin);
-    int readSonicSensorCM(int pin);
-    int readBatteryVoltage(void);
-    void prizmBegin(void);
-    void prizmEnd(void);
-    void setGreenLED(int state);
-    void setRedLED(int state);
-    int readStartButton(void);
+    static uint8_t readLineSensor(uint8_t pin);
+    static uint32_t readSonicSensorCM(uint8_t pin);
+    static int16_t readBatteryVoltage();
+    static void prizmBegin();
+
+    [[noreturn]] static void prizmEnd();
+    static void setGreenLED(uint8_t state);
+    static void setRedLED(uint8_t state);
+    static uint8_t readStartButton();
 
 private:
 };

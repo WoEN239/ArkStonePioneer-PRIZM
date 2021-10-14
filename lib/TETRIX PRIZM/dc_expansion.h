@@ -38,8 +38,8 @@ class DCExpansion : public TetrixExpansion {
 private:
 
 
-    int last_power_1 = 0;
-    int last_power_2 = 0;
+    int16_t last_power_1 = 0;
+    int16_t last_power_2 = 0;
 
 public:
 
@@ -49,33 +49,37 @@ public:
     bool invert_encoder_1 = false;
     bool invert_encoder_2 = false;
 
-    void setMotorPower(int channel, int power);
+    void setMotorPower(int16_t channel, int16_t power);
 
-    void setMotorPowers(int power1, int power2);
+    void setMotorPowers(int16_t power1, int16_t power2);
 
-    void setMotorSpeed(int channel, long Mspeed);
+    void setMotorSpeed(int16_t channel, int32_t Mspeed);
 
-    void setMotorSpeeds(long Mspeed1, long Mspeed2);
+    void setMotorSpeeds(int32_t Mspeed1, int32_t Mspeed2);
 
-    void setMotorTarget(int channel, long Mspeed, long Mtarget);
+    void setMotorTarget(int16_t channel, int32_t Mspeed, int32_t Mtarget);
 
-    void setMotorTargets(long Mspeed1, long Mtarget1, long Mspeed2, long Mtarget2);
+    void setMotorTargets(int32_t Mspeed1, int32_t Mtarget1, int32_t Mspeed2, int32_t Mtarget2);
 
-    void setMotorInvert(int channel, int invertMotor, bool invertEncoder);
+    void setMotorInvert(int16_t channel, int16_t invertMotor);
 
-    int readMotorBusy(int channel);
+    void setMotorInvert(int16_t channel, int16_t invertMotor, bool invertEncoder);
 
-    int readMotorCurrent(int channel);
+    void setMotorBraking(int16_t channel, bool brakeOnZero);
 
-    long readEncoderCount(int channel);
+    int16_t readMotorBusy(int16_t channel);
 
-    void resetEncoder(int channel);
+    int16_t readMotorCurrent(int16_t channel);
+
+    int32_t readEncoderCount(int16_t channel);
+
+    void resetEncoder(int16_t channel);
 
     void resetEncoders();
 
-    void setMotorSpeedPID(int P, int I, int D);
+    void setMotorSpeedPID(int16_t P, int16_t I, int16_t D);
 
-    void setMotorTargetPID(int P, int I, int D);
+    void setMotorTargetPID(int16_t P, int16_t I, int16_t D);
 
 
 private:

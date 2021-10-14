@@ -4,14 +4,14 @@
 
 #include "prizm_utils.h"
 
-void sendOneInt(int address, int data, int delay_ms) {
+void sendOneInt(uint8_t address, int16_t data, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data);
     Wire.endTransmission();
     delay(delay_ms);
 }
 
-void sendTwoInts(int address, int data1, int data2, int delay_ms) {
+void sendTwoInts(uint8_t address, int16_t data1, int16_t data2, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -19,7 +19,7 @@ void sendTwoInts(int address, int data1, int data2, int delay_ms) {
     delay(delay_ms);
 }
 
-void sendThreeInts(int address, int data1, int data2, int data3, int delay_ms) {
+void sendThreeInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -28,7 +28,7 @@ void sendThreeInts(int address, int data1, int data2, int data3, int delay_ms) {
     delay(delay_ms);
 }
 
-void sendFourInts(int address, int data1, int data2, int data3, int data4, int delay_ms) {
+void sendFourInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, int16_t data4, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -38,7 +38,9 @@ void sendFourInts(int address, int data1, int data2, int data3, int data4, int d
     delay(delay_ms);
 }
 
-void sendSevenInts(int address, int data1, int data2, int data3, int data4, int data5, int data6, int data7, int delay_ms) {
+void
+sendSevenInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, int16_t data4, int16_t data5, int16_t data6,
+              int16_t data7, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -51,9 +53,9 @@ void sendSevenInts(int address, int data1, int data2, int data3, int data4, int 
     delay(delay_ms);
 }
 
-void sendIntAndShortLong(int address, int idata, long sldata, int delay_ms) {
-    int lobyte;
-    int hibyte;
+void sendIntAndShortLong(uint8_t address, int16_t idata, int32_t sldata, uint32_t delay_ms) {
+    int16_t lobyte;
+    int16_t hibyte;
 
     lobyte = lowByte(sldata);
     hibyte = highByte(sldata);
@@ -66,10 +68,10 @@ void sendIntAndShortLong(int address, int idata, long sldata, int delay_ms) {
     delay(delay_ms);
 }
 
-void sendIntAndShortLongAndLong(int address, int idata, long sldata, long ldata, int delay_ms) {
+void sendIntAndShortLongAndLong(uint8_t address, int16_t idata, int32_t sldata, int32_t ldata, uint32_t delay_ms) {
 
-    int lobyte;
-    int hibyte;
+    int16_t lobyte;
+    int16_t hibyte;
 
     lobyte = lowByte(sldata);
     hibyte = highByte(sldata);
@@ -92,12 +94,12 @@ void sendIntAndShortLongAndLong(int address, int idata, long sldata, long ldata,
 
 }
 
-void sendIntAndTwoShortLongs(int address, int idata, long sldata1, long sldata2, int delay_ms) {
-    int lobyte1;
-    int hibyte1;
+void sendIntAndTwoShortLongs(uint8_t address, int16_t idata, int32_t sldata1, int32_t sldata2, uint32_t delay_ms) {
+    int16_t lobyte1;
+    int16_t hibyte1;
 
-    int lobyte2;
-    int hibyte2;
+    int16_t lobyte2;
+    int16_t hibyte2;
 
     lobyte1 = lowByte(sldata1);
     hibyte1 = highByte(sldata1);
@@ -115,12 +117,14 @@ void sendIntAndTwoShortLongs(int address, int idata, long sldata1, long sldata2,
     delay(delay_ms);
 }
 
-void sendIntAndTwoShortLongsAndTwoLongs(int address, int idata, long sldata1, long ldata1, long sldata2, long ldata2, int delay_ms) {
-    int lobyte1;
-    int hibyte1;
+void
+sendIntAndTwoShortLongsAndTwoLongs(uint8_t address, int16_t idata, int32_t sldata1, int32_t ldata1, int32_t sldata2,
+                                   int32_t ldata2, uint32_t delay_ms) {
+    int16_t lobyte1;
+    int16_t hibyte1;
 
-    int lobyte2;
-    int hibyte2;
+    int16_t lobyte2;
+    int16_t hibyte2;
 
     lobyte1 = lowByte(sldata1);
     hibyte1 = highByte(sldata1);

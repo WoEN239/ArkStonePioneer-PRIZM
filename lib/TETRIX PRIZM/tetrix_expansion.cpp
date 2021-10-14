@@ -5,7 +5,7 @@
 #include "tetrix_expansion.h"
 #include "prizm_utils.h"
 
-TetrixExpansion::TetrixExpansion(int address) {
+TetrixExpansion::TetrixExpansion(uint8_t address) {
     this->address = address;
 }
 
@@ -17,8 +17,8 @@ void TetrixExpansion::controllerReset() const {
     sendOneInt(address, TETRIXEXPANSION_RESET, 25);
 }
 
-void TetrixExpansion::setID(int newID) {
-    if (int oldID = readID()) {// No other I2C devices can be connected to sensor ports when executing this command.
+void TetrixExpansion::setID(uint8_t newID) {
+    if (uint8_t oldID = readID()) {// No other I2C devices can be connected to sensor ports when executing this command.
 
         sendTwoInts(oldID, TETRIXEXPANSION_SETID, newID);
 
@@ -38,15 +38,15 @@ void TetrixExpansion::controllerEnable() const {
     sendOneInt(address, TETRIXEXPANSION_ENABLE, 25);
 }
 
-int TetrixExpansion::readID() {
-    int ID;                                    // All other I2C devices must also be disconnected from sensor ports when using this function
+uint8_t TetrixExpansion::readID() {
+    uint8_t ID;                      // All other I2C devices must also be disconnected from sensor ports when using this function
 
-    for (int i = 1; i < 120 && !ID; i++) {            // Spin up I2C addresses from 1 - 120
+    for (uint8_t i = 1; i < 120 && !ID; i++) {            // Spin up I2C addresses from 1 - 120
 
         Wire.beginTransmission(i);
 
         if ((Wire.endTransmission() == 0) &&
-            ((i < 5) || (i > 6)))    // Capture response from expansion controller (ignore 5 and 6 - they are used by PRIZM)
+            ((i < 5) || (i > 6))) // Capture response from expansion controller (ignore 5 and 6 - they are used by PRIZM)
         {
             ID = i;
             address = ID;
@@ -57,20 +57,20 @@ int TetrixExpansion::readID() {
     return ID;
 }
 
-int TetrixExpansion::readFirmware() const {
+int16_t TetrixExpansion::readFirmware() const {
 
     sendOneInt(address, TETRIXEXPANSION_READFW);
-    Wire.requestFrom(address, 1);
-    int DCversion = Wire.read();
+    Wire.requestFrom(address, (uint8_t) 1);
+    int16_t DCversion = Wire.read();
     delay(PRIZMUTILS_DEFAULT_I2C_DELAY);
     return DCversion;
 }
 
-int TetrixExpansion::readBatteryVoltage() const {
+int16_t TetrixExpansion::readBatteryVoltage() const {
     sendOneInt(address, DCEXPANSION_READVOLTAGE);
-    Wire.requestFrom(address, 2);
+    Wire.requestFrom(address, (uint8_t) 2);
     byte byte1 = Wire.read();
-    int Bvoltage = byte1 * 256 + Wire.read();
+    int16_t Bvoltage = byte1 * 256 + Wire.read();
     delay(PRIZMUTILS_DEFAULT_I2C_DELAY);
     return Bvoltage;
 }

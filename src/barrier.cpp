@@ -1,14 +1,14 @@
 //
-// Created by muram on 26.09.2021.
+// Created by oaleksander on 26.09.2021.
 //
 
 #include "barrier.h"
 
 Barrier barrier;
 
-void Barrier::getColor(float *r, float *g, float *b) {
+void Barrier::getColor(uint16_t *r, uint16_t *g, uint16_t *b) {
 
-    if (millis() - t_lastread < ((256 - BARRIER_COLOR_INTEGRATIONTIME) * 12 / 5))
+    if (millis() - t_lastread < BARRIER_COLOR_SAMPLEDELAY)
         return;
 
     uint16_t c_raw = tcs.read16(TCS34725_CDATAL);
@@ -24,19 +24,19 @@ void Barrier::getColor(float *r, float *g, float *b) {
 
     c_raw = 255;
 
-    *r = ((float) r_raw / c_raw) * 255.0f;
-    *g = ((float) g_raw / c_raw) * 255.0f;
-    *b = ((float) b_raw / c_raw) * 255.0f;
+    *r = (r_raw * 255) / c_raw;
+    *g = (g_raw * 255) / c_raw;
+    *b = (b_raw * 255) / c_raw;
 }
 
 void Barrier::init() {
     tcs.begin();
     servoExpansion.setServoPosition(BARRIER_SERVO_PORT, BARRIER_SERVO_OPEN);
-    callibrateColor();
+    callibrateColor(BARRIER_COLOR_NCALIBRATIONSAMPLES);
     servoExpansion.setServoPosition(BARRIER_SERVO_PORT, BARRIER_SERVO_CLOSE);
 }
 
-static bool raw_color_bool_last = false;
+bool raw_color_bool_last = false;
 
 void Barrier::update() {
     getColor(&red_value, &green_value, &blue_value);
@@ -44,37 +44,44 @@ void Barrier::update() {
     if (!raw_color_bool_last && raw_color_bool)
         t_start_at_home = millis();
     raw_color_bool_last = raw_color_bool;
-    is_at_home = raw_color_bool && ((millis() - t_start_at_home) > 333);
+    is_at_home = raw_color_bool && ((millis() - t_start_at_home) > BARRIER_COLOR_DETECTION_TIMER_MS);
     servoExpansion.setServoPosition(BARRIER_SERVO_PORT,
-                                    is_at_home && abs(angle_transform(drivetrain.current_angle-45.0)) < 90.0 ? BARRIER_SERVO_OPEN : BARRIER_SERVO_CLOSE);
+                                    is_at_home && abs(angle_transform(gyro.current_angle - 45.0)) < BARRIER_ACTIVATION_ANGULAR_RANGE
+                                    ? BARRIER_SERVO_OPEN : BARRIER_SERVO_CLOSE);
+
+#ifdef SERIAL_DEBUGGING
+    Serial.println(" - = Barrier = -")
+    Serial.print("r:"); Serial.print(barrier.red_value);
+    Serial.print(" g:"); Serial.print(barrier.green_value);
+    Serial.print(" b:"); Serial.print(barrier.blue_value);
+    Serial.print(" athome:"); Serial.println(barrier.is_at_home);
+#endif
 }
 
-void Barrier::callibrateColor(int n_samples) {
-    auto *red_sample = (float *) (malloc(sizeof(float) * n_samples));
-    auto *green_sample = (float *) malloc(sizeof(float) * n_samples);;
-    auto *blue_sample = (float *) malloc(sizeof(float) * n_samples);
-    for (int i = 0; i < 3; i++) {
-        delay(((256 - BARRIER_COLOR_INTEGRATIONTIME) * 12 / 5));
-        getColor(&red_sample[i], &green_sample[i], &blue_sample[i]);
-        red_team += red_sample[i];
-        green_team += green_sample[i];
-        blue_team += blue_sample[i];
+void Barrier::callibrateColor(uint8_t n_samples) {
+    uint16_t red_sample, green_sample, blue_sample;
+    red_sample = green_sample = blue_sample = .0;
+    red_team = green_team = blue_team = .0;
+    for (uint8_t i = 0; i < n_samples; i++) {
+        delay(BARRIER_COLOR_SAMPLEDELAY);
+        getColor(&red_sample, &green_sample, &blue_sample);
+        red_team += red_sample;
+        green_team += green_sample;
+        blue_team += blue_sample;
     }
+
     red_team /= n_samples;
     green_team /= n_samples;
     blue_team /= n_samples;
 
-    free(red_sample);
-    free(green_sample);
-    free(blue_sample);
 
 }
 
 bool Barrier::detectTeamColor() {
-    float delta_red = red_value - red_team;
-    float delta_green = green_value - green_team;
-    float delta_blue = blue_value - blue_team;
+    int32_t delta_red = red_value - red_team;
+    int32_t delta_green = green_value - green_team;
+    int32_t delta_blue = blue_value - blue_team;
 
-    return (sqrtf(delta_red * delta_red + delta_green * delta_green + delta_blue * delta_blue) <= BARRIER_COLOR_TOLERANCE);
+    return (sqrtf((float) (delta_red * delta_red + delta_green * delta_green + delta_blue * delta_blue)) <= BARRIER_COLOR_TOLERANCE);
 }
 
