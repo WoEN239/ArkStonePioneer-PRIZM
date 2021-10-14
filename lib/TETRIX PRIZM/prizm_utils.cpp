@@ -4,14 +4,14 @@
 
 #include "prizm_utils.h"
 
-void sendOneInt(uint8_t address, int16_t data, uint32_t delay_ms) {
+void send8(uint8_t address, uint8_t data, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data);
     Wire.endTransmission();
     delay(delay_ms);
 }
 
-void sendTwoInts(uint8_t address, int16_t data1, int16_t data2, uint32_t delay_ms) {
+void send2x8(uint8_t address, uint8_t data1, uint8_t data2, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -19,7 +19,7 @@ void sendTwoInts(uint8_t address, int16_t data1, int16_t data2, uint32_t delay_m
     delay(delay_ms);
 }
 
-void sendThreeInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, uint32_t delay_ms) {
+void send3x8(uint8_t address, uint8_t data1, uint8_t data2, uint8_t data3, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -28,7 +28,7 @@ void sendThreeInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3,
     delay(delay_ms);
 }
 
-void sendFourInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, int16_t data4, uint32_t delay_ms) {
+void send4x8(uint8_t address, uint8_t data1, uint8_t data2, uint8_t data3, uint8_t data4, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -39,8 +39,8 @@ void sendFourInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, 
 }
 
 void
-sendSevenInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, int16_t data4, int16_t data5, int16_t data6,
-              int16_t data7, uint32_t delay_ms) {
+send7x8(uint8_t address, uint8_t data1, uint8_t data2, uint8_t data3, uint8_t data4, uint8_t data5, uint8_t data6,
+        uint8_t data7, uint32_t delay_ms) {
     Wire.beginTransmission(address);
     Wire.write(data1);
     Wire.write(data2);
@@ -53,9 +53,9 @@ sendSevenInts(uint8_t address, int16_t data1, int16_t data2, int16_t data3, int1
     delay(delay_ms);
 }
 
-void sendIntAndShortLong(uint8_t address, int16_t idata, int32_t sldata, uint32_t delay_ms) {
-    int16_t lobyte;
-    int16_t hibyte;
+void send8and16(uint8_t address, uint8_t idata, int16_t sldata, uint32_t delay_ms) {
+    uint8_t lobyte;
+    uint8_t hibyte;
 
     lobyte = lowByte(sldata);
     hibyte = highByte(sldata);
@@ -68,18 +68,18 @@ void sendIntAndShortLong(uint8_t address, int16_t idata, int32_t sldata, uint32_
     delay(delay_ms);
 }
 
-void sendIntAndShortLongAndLong(uint8_t address, int16_t idata, int32_t sldata, int32_t ldata, uint32_t delay_ms) {
+void send8and16and32(uint8_t address, uint8_t idata, int16_t sldata, int32_t ldata, uint32_t delay_ms) {
 
-    int16_t lobyte;
-    int16_t hibyte;
+    uint8_t lobyte;
+    uint8_t hibyte;
 
     lobyte = lowByte(sldata);
     hibyte = highByte(sldata);
 
-    byte four = (ldata);
-    byte three = (ldata >> 8);
-    byte two = (ldata >> 16);
-    byte one = (ldata >> 24);
+    uint8_t four = (ldata);
+    uint8_t three = (ldata >> 8);
+    uint8_t two = (ldata >> 16);
+    uint8_t one = (ldata >> 24);
 
     Wire.beginTransmission(address);
     Wire.write(idata);
@@ -94,12 +94,12 @@ void sendIntAndShortLongAndLong(uint8_t address, int16_t idata, int32_t sldata, 
 
 }
 
-void sendIntAndTwoShortLongs(uint8_t address, int16_t idata, int32_t sldata1, int32_t sldata2, uint32_t delay_ms) {
-    int16_t lobyte1;
-    int16_t hibyte1;
+void send8and2x16(uint8_t address, uint8_t idata, int16_t sldata1, int16_t sldata2, uint32_t delay_ms) {
+    uint8_t lobyte1;
+    uint8_t hibyte1;
 
-    int16_t lobyte2;
-    int16_t hibyte2;
+    uint8_t lobyte2;
+    uint8_t hibyte2;
 
     lobyte1 = lowByte(sldata1);
     hibyte1 = highByte(sldata1);
@@ -118,13 +118,13 @@ void sendIntAndTwoShortLongs(uint8_t address, int16_t idata, int32_t sldata1, in
 }
 
 void
-sendIntAndTwoShortLongsAndTwoLongs(uint8_t address, int16_t idata, int32_t sldata1, int32_t ldata1, int32_t sldata2,
-                                   int32_t ldata2, uint32_t delay_ms) {
-    int16_t lobyte1;
-    int16_t hibyte1;
+send8and2x16and32(uint8_t address, uint8_t idata, int16_t sldata1, int32_t ldata1, int16_t sldata2,
+                    int32_t ldata2, uint32_t delay_ms) {
+    uint8_t lobyte1;
+    uint8_t hibyte1;
 
-    int16_t lobyte2;
-    int16_t hibyte2;
+    uint8_t lobyte2;
+    uint8_t hibyte2;
 
     lobyte1 = lowByte(sldata1);
     hibyte1 = highByte(sldata1);
@@ -132,15 +132,15 @@ sendIntAndTwoShortLongsAndTwoLongs(uint8_t address, int16_t idata, int32_t sldat
     lobyte2 = lowByte(sldata2);
     hibyte2 = highByte(sldata2);
 
-    byte four1 = (ldata1);
-    byte three1 = (ldata1 >> 8);
-    byte two1 = (ldata1 >> 16);
-    byte one1 = (ldata1 >> 24);
+    uint8_t four1 = (ldata1);
+    uint8_t three1 = (ldata1 >> 8);
+    uint8_t two1 = (ldata1 >> 16);
+    uint8_t one1 = (ldata1 >> 24);
 
-    byte four2 = (ldata2);
-    byte three2 = (ldata2 >> 8);
-    byte two2 = (ldata1 >> 16);
-    byte one2 = (ldata1 >> 24);
+    uint8_t four2 = (ldata2);
+    uint8_t three2 = (ldata2 >> 8);
+    uint8_t two2 = (ldata1 >> 16);
+    uint8_t one2 = (ldata1 >> 24);
 
     Wire.beginTransmission(address);
     Wire.write(idata);

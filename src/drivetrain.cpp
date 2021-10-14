@@ -28,8 +28,8 @@ void Drivetrain::update() {
 }
 
 void Drivetrain::powerMove(int16_t throttle, int16_t steering) {
-    int16_t l_power = throttle + steering;
-    int16_t r_power = throttle - steering;
+    auto l_power = (int16_t)(throttle + steering);
+    auto r_power = (int16_t)(throttle - steering);
 
     #if (DRIVETRAIN_L1_CONTROLLER == DRIVETRAIN_L2_CONTROLLER) && (DRIVETRAIN_L1_CONTROLLER == DRIVETRAIN_L2_CONTROLLER)
     DRIVETRAIN_L1_CONTROLLER.setMotorPowers(l_power,l_power);

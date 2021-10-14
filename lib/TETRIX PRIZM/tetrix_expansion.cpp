@@ -10,17 +10,17 @@ TetrixExpansion::TetrixExpansion(uint8_t address) {
 }
 
 void TetrixExpansion::WDT_STOP() const {
-    sendOneInt(address, TETRIXEXPANSION_WDTSTOP, 50);
+    send8(address, TETRIXEXPANSION_WDTSTOP, 50);
 }
 
 void TetrixExpansion::controllerReset() const {
-    sendOneInt(address, TETRIXEXPANSION_RESET, 25);
+    send8(address, TETRIXEXPANSION_RESET, 25);
 }
 
 void TetrixExpansion::setID(uint8_t newID) {
     if (uint8_t oldID = readID()) {// No other I2C devices can be connected to sensor ports when executing this command.
 
-        sendTwoInts(oldID, TETRIXEXPANSION_SETID, newID);
+        send2x8(oldID, TETRIXEXPANSION_SETID, newID);
 
         pinMode(6, OUTPUT);                //===== RED LED is on pin 6
         digitalWrite(6, HIGH);                // Flash PRIZM Red LED when finished
@@ -35,7 +35,7 @@ void TetrixExpansion::setID(uint8_t newID) {
 }
 
 void TetrixExpansion::controllerEnable() const {
-    sendOneInt(address, TETRIXEXPANSION_ENABLE, 25);
+    send8(address, TETRIXEXPANSION_ENABLE, 25);
 }
 
 uint8_t TetrixExpansion::readID() {
@@ -59,7 +59,7 @@ uint8_t TetrixExpansion::readID() {
 
 int16_t TetrixExpansion::readFirmware() const {
 
-    sendOneInt(address, TETRIXEXPANSION_READFW);
+    send8(address, TETRIXEXPANSION_READFW);
     Wire.requestFrom(address, (uint8_t) 1);
     int16_t DCversion = Wire.read();
     delay(PRIZMUTILS_DEFAULT_I2C_DELAY);
@@ -67,7 +67,7 @@ int16_t TetrixExpansion::readFirmware() const {
 }
 
 int16_t TetrixExpansion::readBatteryVoltage() const {
-    sendOneInt(address, DCEXPANSION_READVOLTAGE);
+    send8(address, DCEXPANSION_READVOLTAGE);
     Wire.requestFrom(address, (uint8_t) 2);
     byte byte1 = Wire.read();
     int16_t Bvoltage = byte1 * 256 + Wire.read();

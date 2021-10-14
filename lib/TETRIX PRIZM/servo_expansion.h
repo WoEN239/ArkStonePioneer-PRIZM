@@ -38,26 +38,26 @@ class ServoExpansion : public TetrixExpansion {
 
 private:
 
-    int16_t last_position_1 = 90;        // these hold the current 'last' positions of each servo channel
-    int16_t last_position_2 = 90;
-    int16_t last_position_3 = 90;
-    int16_t last_position_4 = 90;
-    int16_t last_position_5 = 90;
-    int16_t last_position_6 = 90;
+    uint8_t  last_position_1 = 90;        // these hold the current 'last' positions of each servo channel
+    uint8_t  last_position_2 = 90;
+    uint8_t  last_position_3 = 90;
+    uint8_t  last_position_4 = 90;
+    uint8_t  last_position_5 = 90;
+    uint8_t  last_position_6 = 90;
 
 public:
 
-    void setServoSpeed(int16_t channel, int16_t servospeed);
+    void setServoSpeed(uint8_t  channel, uint8_t  servospeed);
 
-    void setServoSpeeds(int16_t servospeed1, int16_t servospeed2, int16_t servospeed3, int16_t servospeed4, int16_t servospeed5, int16_t servospeed6);
+    void setServoSpeeds(uint8_t  servospeed1, uint8_t  servospeed2, uint8_t  servospeed3, uint8_t  servospeed4, uint8_t  servospeed5, uint8_t  servospeed6);
 
-    void setServoPosition(int16_t channel, int16_t servoposition);
+    void setServoPosition(uint8_t  channel, uint8_t  servoposition);
 
-    void setServoPositions(int16_t servoposition1, int16_t servoposition2, int16_t servoposition3, int16_t servoposition4, int16_t servoposition5, int16_t servoposition6);
+    void setServoPositions(uint8_t  servoposition1, uint8_t  servoposition2, uint8_t  servoposition3, uint8_t  servoposition4, uint8_t  servoposition5, uint8_t  servoposition6);
 
-    void setCRServoState(int16_t channel, int16_t servospeed);
+    void setCRServoState(uint8_t  channel, uint8_t  servospeed);
 
-    int16_t readServoPosition(int16_t channel);
+    int16_t readServoPosition(uint8_t channel);
 };
 
 

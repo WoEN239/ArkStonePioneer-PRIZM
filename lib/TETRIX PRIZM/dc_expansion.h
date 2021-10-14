@@ -30,6 +30,7 @@
 #define DCEXPANSION_RESETENCODERS (0x4E)
 #define DCEXPANSION_SETSPEEDPID (0X56)
 #define DCEXPANSION_SETTARGETPID (0x57)
+#define DCEXPANSION_BRAKEMOTOR (0x7D)
 
 class DCExpansion : public TetrixExpansion {
 
@@ -37,9 +38,8 @@ class DCExpansion : public TetrixExpansion {
 
 private:
 
-
-    int16_t last_power_1 = 0;
-    int16_t last_power_2 = 0;
+    uint8_t last_power_1 = 0;
+    uint8_t last_power_2 = 0;
 
 public:
 
@@ -49,37 +49,37 @@ public:
     bool invert_encoder_1 = false;
     bool invert_encoder_2 = false;
 
-    void setMotorPower(int16_t channel, int16_t power);
+    void setMotorPower(uint8_t channel, int16_t power);
 
     void setMotorPowers(int16_t power1, int16_t power2);
 
-    void setMotorSpeed(int16_t channel, int32_t Mspeed);
+    void setMotorSpeed(uint8_t channel, int16_t Mspeed);
 
-    void setMotorSpeeds(int32_t Mspeed1, int32_t Mspeed2);
+    void setMotorSpeeds(int16_t Mspeed1, int16_t Mspeed2);
 
-    void setMotorTarget(int16_t channel, int32_t Mspeed, int32_t Mtarget);
+    void setMotorTarget(uint8_t channel, int16_t Mspeed, int32_t Mtarget);
 
-    void setMotorTargets(int32_t Mspeed1, int32_t Mtarget1, int32_t Mspeed2, int32_t Mtarget2);
+    void setMotorTargets(int16_t Mspeed1, int32_t Mtarget1, int16_t Mspeed2, int32_t Mtarget2);
 
-    void setMotorInvert(int16_t channel, int16_t invertMotor);
+    void setMotorInvert(uint8_t channel, uint8_t invertMotor);
 
-    void setMotorInvert(int16_t channel, int16_t invertMotor, bool invertEncoder);
+    void setMotorInvert(uint8_t channel, uint8_t invertMotor, bool invertEncoder);
 
-    void setMotorBraking(int16_t channel, bool brakeOnZero);
+    void setMotorBraking(uint8_t channel, bool brakeOnZero);
 
-    int16_t readMotorBusy(int16_t channel);
+    int16_t readMotorBusy(uint8_t channel);
 
-    int16_t readMotorCurrent(int16_t channel);
+    int16_t readMotorCurrent(uint8_t channel);
 
-    int32_t readEncoderCount(int16_t channel);
+    int32_t readEncoderCount(uint8_t channel);
 
-    void resetEncoder(int16_t channel);
+    void resetEncoder(uint8_t channel);
 
     void resetEncoders();
 
-    void setMotorSpeedPID(int16_t P, int16_t I, int16_t D);
+    void setMotorSpeedPID(uint8_t P, uint8_t I, uint8_t D);
 
-    void setMotorTargetPID(int16_t P, int16_t I, int16_t D);
+    void setMotorTargetPID(uint8_t P, uint8_t I, uint8_t D);
 
 
 private:

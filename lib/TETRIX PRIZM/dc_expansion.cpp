@@ -5,56 +5,56 @@
 #include "dc_expansion.h"
 
 
-void DCExpansion::setMotorPower(int16_t channel, int16_t power) {
-    power = power < -100 ? -100 : power > 100 ? 100 : power;
+void DCExpansion::setMotorPower(uint8_t channel, int16_t power) {
+    uint8_t byte = power < -100 ? -100 : power > 100 ? 100 : power;
     if (channel == 1) {
-        power = power == 0 && brake_on_zero_1 ? 125 : power;
-        if (power != last_power_1) {
-            sendTwoInts(address, DCEXPANSION_SETPOWER1, power);
-            last_power_1 = power;
+        byte = (!byte) && brake_on_zero_1 ? DCEXPANSION_BRAKEMOTOR : byte;
+        if (byte != last_power_1) {
+            send2x8(address, DCEXPANSION_SETPOWER1, byte);
+            last_power_1 = byte;
         }
     }   // DC channel 1
     if (channel == 2) {
-        power = power == 0 && brake_on_zero_2 ? 125 : power;
-        if (power != last_power_2) {
-            sendTwoInts(address, DCEXPANSION_SETPOWER2, power);
-            last_power_2 = power;
+        byte = (!byte) && brake_on_zero_2 ? DCEXPANSION_BRAKEMOTOR : byte;
+        if (byte != last_power_2) {
+            send2x8(address, DCEXPANSION_SETPOWER2, byte);
+            last_power_2 = byte;
         }
     }   // DC channel 2
 
 }
 
 void DCExpansion::setMotorPowers(int16_t power1, int16_t power2) {
-    power1 = power1 < -100 ? -100 : power1 > 100 ? 100 : power1 == 0 && brake_on_zero_1 ? 125 : power1;
-    power2 = power2 < -100 ? -100 : power2 > 100 ? 100 : power2 == 0 && brake_on_zero_2 ? 125 : power2;
-    if (power1 != last_power_1 || power2 != last_power_2) {
-        sendThreeInts(address, DCEXPANSION_SETPOWERS, power1, power2);
-        last_power_1 = power1;
-        last_power_2 = power2;
+    uint8_t byte1 = power1 < -100 ? -100 : power1 > 100 ? 100 : power1 == 0 && brake_on_zero_1 ? DCEXPANSION_BRAKEMOTOR : power1;
+    uint8_t byte2 = power2 < -100 ? -100 : power2 > 100 ? 100 : power2 == 0 && brake_on_zero_2 ? DCEXPANSION_BRAKEMOTOR : power2;
+    if (byte1 != last_power_1 || byte2 != last_power_2) {
+        send3x8(address, DCEXPANSION_SETPOWERS, byte1, byte2);
+        last_power_1 = byte1;
+        last_power_2 = byte2;
     }
 }
 
-void DCExpansion::setMotorSpeed(int16_t channel, int32_t Mspeed) {
+void DCExpansion::setMotorSpeed(uint8_t channel, int16_t Mspeed) {
     if (channel == 1) { channel = DCEXPANSION_SETSPEED1; }   // DC channel 1
     if (channel == 2) { channel = DCEXPANSION_SETSPEED2; }
-    sendIntAndShortLong(address, channel, Mspeed);
+    send8and16(address, channel, Mspeed);
 }
 
-void DCExpansion::setMotorSpeeds(int32_t Mspeed1, int32_t Mspeed2) {
-    sendIntAndTwoShortLongs(address, DCEXPANSION_SETSPEEDS, Mspeed1, Mspeed2);
+void DCExpansion::setMotorSpeeds(int16_t Mspeed1, int16_t Mspeed2) {
+    send8and2x16(address, DCEXPANSION_SETSPEEDS, Mspeed1, Mspeed2);
 }
 
-void DCExpansion::setMotorTarget(int16_t channel, int32_t Mspeed, int32_t Mtarget) {
+void DCExpansion::setMotorTarget(uint8_t channel, int16_t Mspeed, int32_t Mtarget) {
     if (channel == 1) { channel = DCEXPANSION_SETTARGET1; }   // DC channel 1
     if (channel == 2) { channel = DCEXPANSION_SETTARGET2; }
-    sendIntAndShortLongAndLong(address, channel, Mspeed, Mtarget);
+    send8and16and32(address, channel, Mspeed, Mtarget);
 }
 
-void DCExpansion::setMotorTargets(int32_t Mspeed1, int32_t Mtarget1, int32_t Mspeed2, int32_t Mtarget2) {
-    sendIntAndTwoShortLongsAndTwoLongs(address, DCEXPANSION_SETTARGETS, Mspeed1, Mtarget1, Mspeed2, Mtarget2);
+void DCExpansion::setMotorTargets(int16_t Mspeed1, int32_t Mtarget1, int16_t Mspeed2, int32_t Mtarget2) {
+    send8and2x16and32(address, DCEXPANSION_SETTARGETS, Mspeed1, Mtarget1, Mspeed2, Mtarget2);
 }
 
-void DCExpansion::setMotorInvert(int16_t channel, int16_t invertMotor, bool invertEncoder) {
+void DCExpansion::setMotorInvert(uint8_t channel, uint8_t invertMotor, bool invertEncoder) {
     if (channel == 1) {
         channel = DCEXPANSION_SETINVERT1;
         invert_encoder_1 = invertEncoder;
@@ -63,30 +63,30 @@ void DCExpansion::setMotorInvert(int16_t channel, int16_t invertMotor, bool inve
         channel = DCEXPANSION_SETINVERT2;
         invert_encoder_2 = invertEncoder;
     }
-    sendTwoInts(address, channel, invertMotor);
+    send2x8(address, channel, invertMotor);
 }
 
-void DCExpansion::setMotorBraking(int16_t channel, bool brakeOnZero) {
+void DCExpansion::setMotorBraking(uint8_t channel, bool brakeOnZero) {
     if(channel == 1)
         brake_on_zero_1 = brakeOnZero;
     else if(channel == 2)
         brake_on_zero_2 = brakeOnZero;
 }
 
-int16_t DCExpansion::readMotorBusy(int16_t channel) {
+int16_t DCExpansion::readMotorBusy(uint8_t channel) {
     if (channel == 1) { channel = DCEXPANSION_READBUSY1; }   // DC channel 1
     if (channel == 2) { channel = DCEXPANSION_READBUSY2; }
-    sendOneInt(address, channel);
+    send8(address, channel);
     Wire.requestFrom(address, (uint8_t)1);
     int16_t byte1 = Wire.read();
     delay(PRIZMUTILS_DEFAULT_I2C_DELAY);
     return byte1;
 }
 
-int16_t DCExpansion::readMotorCurrent(int16_t channel) {
+int16_t DCExpansion::readMotorCurrent(uint8_t channel) {
     if (channel == 1) { channel = DCEXPANSION_READCURRENT1; }   // DC channel 1
     if (channel == 2) { channel = DCEXPANSION_READCURRENT2; }
-    sendOneInt(address, channel);
+    send8(address, channel);
     Wire.requestFrom(address, (uint8_t)2);
     byte byte1 = Wire.read();
     int16_t MotorCurrent = byte1 * 256 + Wire.read();
@@ -94,7 +94,7 @@ int16_t DCExpansion::readMotorCurrent(int16_t channel) {
     return MotorCurrent;
 }
 
-int32_t DCExpansion::readEncoderCount(int16_t channel) {
+int32_t DCExpansion::readEncoderCount(uint8_t channel) {
     int8_t sign = 0;
     if (channel == 1) {
         channel = DCEXPANSION_READENCODER1;
@@ -104,7 +104,7 @@ int32_t DCExpansion::readEncoderCount(int16_t channel) {
         channel = DCEXPANSION_READENCODER2;
         sign = invert_encoder_2 ? -1 : 1;
     }
-    sendOneInt(address, channel);
+    send8(address, channel);
 
     Wire.requestFrom(address, (uint8_t)4);
     byte byte1 = Wire.read();
@@ -115,25 +115,25 @@ int32_t DCExpansion::readEncoderCount(int16_t channel) {
     return sign * eCount;
 }
 
-void DCExpansion::resetEncoder(int16_t channel) {
+void DCExpansion::resetEncoder(uint8_t channel) {
     if (channel == 1) { channel = DCEXPANSION_RESETENCODER1; }
     if (channel == 2) { channel = DCEXPANSION_RESETENCODER2; }
-    sendOneInt(address, channel);
+    send8(address, channel);
 }
 
 void DCExpansion::resetEncoders() {
-    sendOneInt(address, DCEXPANSION_RESETENCODERS);
+    send8(address, DCEXPANSION_RESETENCODERS);
 }
 
-void DCExpansion::setMotorSpeedPID(int16_t P, int16_t I, int16_t D) {
-    sendFourInts(address, DCEXPANSION_SETSPEEDPID, P, I, D);
+void DCExpansion::setMotorSpeedPID(uint8_t P, uint8_t I, uint8_t D) {
+    send4x8(address, DCEXPANSION_SETSPEEDPID, P, I, D);
 }
 
-void DCExpansion::setMotorTargetPID(int16_t P, int16_t I, int16_t D) {
-    sendFourInts(address, DCEXPANSION_SETTARGETPID, P, I, D);
+void DCExpansion::setMotorTargetPID(uint8_t P, uint8_t I, uint8_t D) {
+    send4x8(address, DCEXPANSION_SETTARGETPID, P, I, D);
 }
 
-void DCExpansion::setMotorInvert(int16_t channel, int16_t invertMotor) {
+void DCExpansion::setMotorInvert(uint8_t channel, uint8_t invertMotor) {
     setMotorInvert(channel,invertMotor,invertMotor);
 }
 
