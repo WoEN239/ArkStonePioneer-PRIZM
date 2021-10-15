@@ -50,11 +50,11 @@ void Barrier::update() {
                                     ? BARRIER_SERVO_OPEN : BARRIER_SERVO_CLOSE);
 
 #ifdef SERIAL_DEBUGGING
-    Serial.println(" - = Barrier = -")
-    Serial.print("r:"); Serial.print(barrier.red_value);
-    Serial.print(" g:"); Serial.print(barrier.green_value);
-    Serial.print(" b:"); Serial.print(barrier.blue_value);
-    Serial.print(" athome:"); Serial.println(barrier.is_at_home);
+    Serial.println(F(" - = Barrier = -"));
+    Serial.print(F("r:")); Serial.print(barrier.red_value);
+    Serial.print(F(" g:")); Serial.print(barrier.green_value);
+    Serial.print(F(" b:")); Serial.print(barrier.blue_value);
+    Serial.print(F(" athome:")); Serial.println(barrier.is_at_home);
 #endif
 }
 

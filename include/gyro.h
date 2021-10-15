@@ -24,6 +24,13 @@ public:
 
 extern Gyro gyro;
 
-float angle_transform(float);
+inline float angle_transform(float alpha){
+    if (alpha > 180.0)
+        do alpha -= 360.0; while (alpha > 180.0);
+    else if (alpha < -180.0)
+        do alpha += 360.0; while (alpha < -180.0);
+    return alpha;
+}
+
 
 #endif //PUCKCOLLECT2021_GYRO_H

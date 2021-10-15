@@ -12,9 +12,11 @@
 #include "ledstrip.h"
 #include "NewPing.h"
 
+
+
 void setup() {
-    NewPing ping = NewPing(20,20,20);
-    ping.ping();
+   // NewPing ping = NewPing(2,2,20);
+   // ping.ping();
 #ifdef SERIAL_DEBUGGING
     Serial.begin(SERIAL_DEBUGGING);
 #endif
