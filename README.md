@@ -1,2 +1,3 @@
-# PuckCollect2021
-This repository contains code for WoEN 2021 Puck Collect robot based on TETRIX PRIZM and LEGO Minstorms NXT.
+## Description
+
+This is the TETRIX PRIZM part of the program for WoEN: ArkStone Pioneer Puck Collect robot. See [this repository](https://github.com/WoEN239/ArkStonePioneer-REV) for the REV Control Hub part.
