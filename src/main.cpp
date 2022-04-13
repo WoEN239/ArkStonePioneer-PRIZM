@@ -1,45 +1,42 @@
 #include <Arduino.h>
 #include "WireNoFreeze.h"
-#include "prizm.h"
+#include "Prizm_Controller.h"
 
+#define SERIAL_OUTPUT 115200
 
-#define SERIAL_DEBUGGING 115200
-
-#include "drivetrain.h"
-
-#include "barrier.h"
-#include "intake.h"
-#include "ledstrip.h"
+/*
 #include "NewPing.h"
-
-
+*/
 
 void setup() {
-   // NewPing ping = NewPing(2,2,20);
-   // ping.ping();
-#ifdef SERIAL_DEBUGGING
-    Serial.begin(SERIAL_DEBUGGING);
-#endif
-    //initialization phase 1
-    Prizm::prizmBegin();
-    //initalization phase 2
-    barrier.init();
-    drivetrain.init();
-    intake.init();
-    led_strip.init();
 
-    Prizm::setRedLED(HIGH);                    // Turn on when we're reset
+#ifdef SERIAL_OUTPUT
+    Serial.begin(SERIAL_OUTPUT);
+#endif
+
+    Prizm::prizmBegin(false);
+
+    Prizm::setRedLED(HIGH);
     while (Prizm::readStartButton() == 0) {
         Prizm::setGreenLED(millis() % 200 < 100 ? HIGH : LOW);
     }        // wait for the program start (green_value) button pressed
-    Prizm::setGreenLED(LOW);
-    Prizm::setRedLED(LOW);
+    prizm.setGreenLED(LOW);
+
 }
 
-
 void loop() {
-    barrier.update();
-    drivetrain.update();
-    intake.update();
-    led_strip.update();
+    Serial.print('1');
+    delay(1000);
+
+    Serial.print('2');
+    delay(1000);
+
+    Serial.print('3');
+    delay(1000);
+
+    Serial.print('4');
+    delay(1000);
+
+    Serial.print('5');
+    delay(1000);
 }
