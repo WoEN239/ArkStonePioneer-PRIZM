@@ -9,7 +9,7 @@
 #define N_BYTE_HIBYTE 2
 #define N_BYTE_LOBYTE 3
 
-enum Commands {
+enum CommandType {
     CMD_RESET,
     CMD_SETMOTORPOWER,
     CMD_SETMOTORPOWERS,
@@ -31,7 +31,7 @@ enum Commands {
 #include "NewPing.h"
 */
 
-void establishConnection(){
+void establishConnection() {
     prizm.setGreenLED(LOW);
     Serial.flush();
     delay(100);
@@ -39,7 +39,7 @@ void establishConnection(){
     delay(100);
     prizm.setGreenLED(HIGH);
     Serial.begin(SERIAL_OUTPUT);
-    delay(300);
+    delay(100);
     prizm.setGreenLED(LOW);
 }
 
@@ -61,6 +61,13 @@ void setup() {
 
 typeof(millis()) last_received_ms = 0;
 
+void writeI32toByteBuffer(int32_t number, byte *buffer) {
+    buffer[0] = (int8_t) ((number >> 24) & 0xFF);
+    buffer[1] = (int8_t) ((number >> 16) & 0xFF);
+    buffer[2] = (int8_t) ((number >> 8) & 0xFF);
+    buffer[3] = (int8_t) ((number >> 0) & 0xFF);
+}
+
 void loop() {
     const size_t n_bytes_to_receive = 4;
     if (Serial.available() >= n_bytes_to_receive) {
@@ -79,27 +86,40 @@ void loop() {
                 respond_msg[3] = bytes[N_BYTE_COMMAND];
                 break;
             case CMD_READENCODER: {
-                PrizmDCExpansion expansion = bytes[N_BYTE_NCONTROLLER] ? PrizmDCExpansion(bytes[N_BYTE_NCONTROLLER])
-                                                                       : prizm.integrated_DC;
-                int32_t value = expansion.readEncoderCount(bytes[N_BYTE_LOBYTE]);
-                memcpy(respond_msg, &value, sizeof value);
+                PrizmDCExpansion *expansion = bytes[N_BYTE_NCONTROLLER] ?
+                                              new PrizmDCExpansion(bytes[N_BYTE_NCONTROLLER])
+                                                                        : &prizm.integrated_DC;
+                int32_t value = expansion->readEncoderCount(bytes[N_BYTE_HIBYTE]);
+                if (bytes[N_BYTE_NCONTROLLER]) delete expansion;
+                writeI32toByteBuffer(value, respond_msg);
+                break;
+            }
+            case CMD_READMOTORCURRENT: {
+                PrizmDCExpansion *expansion = bytes[N_BYTE_NCONTROLLER] ?
+                                              new PrizmDCExpansion(bytes[N_BYTE_NCONTROLLER])
+                                                                        : &prizm.integrated_DC;
+                int16_t value = expansion->readMotorCurrent(bytes[N_BYTE_HIBYTE]);
+                if (bytes[N_BYTE_NCONTROLLER]) delete expansion;
+                writeI32toByteBuffer(value, respond_msg);
                 break;
             }
             case CMD_SETMOTORPOWER: {
-                PrizmDCExpansion expansion = bytes[N_BYTE_NCONTROLLER] ? PrizmDCExpansion(bytes[N_BYTE_NCONTROLLER])
-                                                                       : prizm.integrated_DC;
-                expansion.setMotorPower(bytes[N_BYTE_HIBYTE] ? 1 : 0, (int8_t) bytes[N_BYTE_LOBYTE]);
+                PrizmDCExpansion *expansion = bytes[N_BYTE_NCONTROLLER] ?
+                                              new PrizmDCExpansion(bytes[N_BYTE_NCONTROLLER])
+                                                                        : &prizm.integrated_DC;
+                expansion->setMotorPower(bytes[N_BYTE_HIBYTE] == 2 ? 2 : 1, (int8_t) bytes[N_BYTE_LOBYTE]);
+                if (bytes[N_BYTE_NCONTROLLER]) delete expansion;
                 respond_msg[3] = bytes[N_BYTE_COMMAND];
                 break;
             }
         }
 
-        Serial.write(bytes, n_bytes_respond);
+        Serial.write(respond_msg, n_bytes_respond);
 
         free(bytes);
     }
 
-    if (millis() - last_received_ms > 2000) {
+    if (millis() - last_received_ms > 1000) {
         prizm.integrated_DC.setMotorPowers(0, 0);
         establishConnection();
     }
