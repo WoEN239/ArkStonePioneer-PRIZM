@@ -18,7 +18,7 @@ double updateRegulator(struct paramsRegulatorPIDVAS *paramsRegulatorPIDVAS, doub
         double P = velocityError * paramsRegulatorPIDVAS->kP;
         double D = (velocityError - velocityErrorOld) * paramsRegulatorPIDVAS->kD / timeDelta;
         I += (paramsRegulatorPIDVAS->kI * velocityError) * timeDelta;
-        if (abs(n) > paramsRegulatorPIDVAS->maxI) I = sign(I) * paramsRegulatorPIDVAS->maxI;
+        if (abs(I) > paramsRegulatorPIDVAS->maxI) I = sign(I) * paramsRegulatorPIDVAS->maxI;
         double V = paramsRegulatorPIDVAS->kV * target * voltageDelta;
         double A = paramsRegulatorPIDVAS->kA * (target - velocityTargetOld) / timeDelta * voltageDelta;
         double S = paramsRegulatorPIDVAS->kS * sign(target) * voltageDelta;

@@ -5,6 +5,7 @@
 #ifndef ARKSTONEPIONEER_PRIZM_MOTORACCELERATIONLIMITER_H
 #define ARKSTONEPIONEER_PRIZM_MOTORACCELERATIONLIMITER_H
 #include "MathExtend.h"
+#include <Arduino.h>
 struct paramsMotorAccelerationLimiter {
     double maxAcceleration;
 };

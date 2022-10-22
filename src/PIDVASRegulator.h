@@ -5,6 +5,7 @@
     #ifndef ARKSTONEPIONEER_PRIZM_PIDVASREGULATOR_H
     #define ARKSTONEPIONEER_PRIZM_PIDVASREGULATOR_H
 #include <MathExtend.h>
+#include <Arduino.h>
     struct paramsRegulatorPIDVAS {
         double kP;
         double kI;

@@ -5,5 +5,4 @@
 #ifndef ARKSTONEPIONEER_PRIZM_MATHEXTEND_H
 #define ARKSTONEPIONEER_PRIZM_MATHEXTEND_H
 double sign(double n);
-double abs(double n);
 #endif //ARKSTONEPIONEER_PRIZM_MATHEXTEND_H
